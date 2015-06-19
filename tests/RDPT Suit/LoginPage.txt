@@ -1,0 +1,22 @@
+*** Settings ***
+Resource          Common.txt
+Library           Selenium2Library
+
+*** Variables ***
+${SIGN_IN_LOCATOR}    //a[@class='signInBtn button I js-signIn']
+${INPUT_USER_LOCATOR}    //input[@id='Name']
+${LOGIN_BUTTON_LOCATOR}    //input[@class='button I signin js-signIn-ok'][ancestor::*[@id='signinPopup']]
+${PASSWORD_FIELD_LOCATOR}    //input[@id='Password']
+${VERIFY_LOGIN_FAILD_LOCATOR}    //li[text()='Ошибка авторизации. Пожалуйста, попробуйте еще раз.'][ancestor::*[@class='validation-summary-errors formError']]
+
+*** Keywords ***
+Login
+    [Arguments]    ${loginURL}    ${login}    ${password}
+    Open Browser    ${loginURL}
+    Maximize Browser Window
+    Wait Until Element Is Visible    ${SIGN_IN_LOCATOR}    10
+    Click Element    ${SIGN_IN_LOCATOR}
+    Wait Until Element Is Visible    ${INPUT_USER_LOCATOR}    10
+    Input Text    ${INPUT_USER_LOCATOR}    ${login}
+    Input Text    ${PASSWORD_FIELD_LOCATOR}    ${password}
+    Click Element    ${LOGIN_BUTTON_LOCATOR}

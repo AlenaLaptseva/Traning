@@ -1,0 +1,42 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          Common.txt
+Resource          TrainingPage.txt
+Resource          LoginPage.txt
+Resource          TrainingPage.txt
+Resource          BasePage.txt
+Resource          CreateTraningPage.txt
+
+*** Variables ***
+${TRAINING_TYPE}    Continuous Learning    # Continuous Learning
+${START_DATE}     2015-Jun-24
+${END_DATE}       2015-Jul-28
+${TRAINING_NAME}    Training
+${STUDENTS_COUNT}    10
+${SKILL}          Java
+
+*** Test Cases ***
+CreateTrainingTest
+    Login    ${LOGIN_URL}    ${TRAINER_USER}    ${TRAINER_PASSWORD}
+    Open Training Page
+    Open Create Training Page
+    ${EnteredTrainingName}=    Create Training    ${SKILL}    ${TRAINING_NAME}    ${TRAINING_TYPE}    ${START_DATE}    ${END_DATE}
+    ...    ${STUDENTS_COUNT}
+    Verify Training In List    ${EnteredTrainingName}
+    Close Browser
+
+LoginWithInvalidPasswordTest
+    Login    ${LOGIN_URL}    ${TRAINER_USER}    ${INCORRECT_PASSWORD}
+    Page Should Contain    Ошибка авторизации. Пожалуйста, попробуйте еще раз.
+    Close Browser
+
+*** Keywords ***
+Verify Training In List
+    [Arguments]    ${enteredTrainingName}
+    Open Training Page
+    Input Text    ${SEARCH_TRAINING_LOCATOR}    ${enteredTrainingName}
+    Click Element    ${APPLY_SEARCH_LOCATOR}
+    Wait Until Element Is Visible    ${SEARCH_RESULTS_TABLE_LOCATOR}
+    ${actualTrainingName}=    Get Text    ${SEARCH_RESULTS_TABLE_LOCATOR}
+    Run Keyword if    '${enteredTrainingName}'== '${actualTrainingName}'    Log    Real training name corresponds to actual training name.
+    Run Keyword Unless    '${enteredTrainingName}'== '${actualTrainingName}'    Fail    Real training name not corresponds to actual training name.

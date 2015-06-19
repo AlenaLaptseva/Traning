@@ -1,0 +1,14 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          TrainingPage.txt
+
+*** Variables ***
+${MAIN_MENU_LOCATOR}    //header[@class='pageHeader clearfix']//span[@class='arrow']
+${TRAININGS_MANAGMENT_MENU_LOCATOR}    //div[@class='box clearfix']//a[text()='Trainings management']
+${USER_LOGO_LOCATOR}    //header[@class='pageHeader clearfix']//a[@id='userBtn']
+
+*** Keywords ***
+Open Training Page
+    Click Element    ${MAIN_MENU_LOCATOR}
+    Click Element    ${TRAININGS_MANAGMENT_MENU_LOCATOR}
+    Wait Until Element Is Visible    ${TRAINING_PLANS_LOCATOR}

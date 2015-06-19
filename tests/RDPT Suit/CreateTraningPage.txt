@@ -1,0 +1,34 @@
+*** Settings ***
+Library           Selenium2Library
+Library           DateTime
+
+*** Variables ***
+${SKILL_LOCATOR}    //select[@id='Plan_TypeId']
+${STUDENTS_COUNT_LOCATOR}    //input[@id='Plan_GraduationCount']
+${CREATE_BUTTON_LOCATOR}    //input[@type='submit' and @value='Create']
+${TRAINING_TYPE_LOCATOR}    //select[@id='Plan_WorkflowType_Id']
+${START_DATE_LOCATOR}    //input[@id='Plan_StartDate']
+${END_DATE_LOCATOR}    //input[@id='Plan_EndDate']
+${TRAINING_NAME_LOCATOR}    //input[@id='Plan_Name']
+${FIND_CITY_LOCATOR}    //label[text()='Target city']/ancestor::tr//div/a/div
+${ENTER_CITY_FIELD_LOCATOR}    //label[text()='Target city']/ancestor::tr//div[@class='chzn-search']/input
+${TARGET_CITY_PATTERN}    //label[text()='Target city']/ancestor::tr//div[@class='chzn-drop']/ul/li/em[text()='${TARGET_CITY}']
+${TARGET_CITY}    Gomel, Belarus
+${CREATE_PAN_LOCATOR}    //div[@class='pane']
+
+*** Keywords ***
+Create Training
+    [Arguments]    ${skill}    ${trainingName}    ${trainingType}    ${startDate}    ${endDate}    ${studentsCount}
+    Select From List    ${SKILL_LOCATOR}    ${skill}
+    ${currentDate}=    Get Current Date
+    ${trainingAndtDate}=    Catenate    ${trainingName}    ${currentDate}
+    Input Text    ${TRAINING_NAME_LOCATOR}    ${trainingAndtDate}
+    Select From List    ${TRAINING_TYPE_LOCATOR}    ${trainingType}
+    Input Text    ${START_DATE_LOCATOR}    ${startDate}
+    Input Text    ${END_DATE_LOCATOR}    ${endDate}
+    Input Text    ${STUDENTS_COUNT_LOCATOR}    ${studentsCount}
+    Click Element    ${FIND_CITY_LOCATOR}
+    Input Text    ${ENTER_CITY_FIELD_LOCATOR}    ${TARGET_CITY}
+    Click Element    ${TARGET_CITY_PATTERN}
+    Click Element    ${CREATE_BUTTON_LOCATOR}
+    [Return]    ${trainingAndtDate}

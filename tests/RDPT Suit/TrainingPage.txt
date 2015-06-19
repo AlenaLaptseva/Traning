@@ -1,0 +1,15 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          CreateTraningPage.txt
+
+*** Variables ***
+${CREATE_NEW_TRAINING_BUTTON_LOCATOR}    //a[@title='Create new training']
+${APPLY_SEARCH_LOCATOR}    //input[@value='Apply']
+${SEARCH_TRAINING_LOCATOR}    //div[@class='search']/input
+${SEARCH_RESULTS_TABLE_LOCATOR}    //a[@class='link js-stop-propagation']
+${TRAINING_PLANS_LOCATOR}    //div[@id='plans']
+
+*** Keywords ***
+Open Create Training Page
+    Click Element    ${CREATE_NEW_TRAINING_BUTTON_LOCATOR}
+    Wait Until Element Is Visible    ${CREATE_PAN_LOCATOR}    20

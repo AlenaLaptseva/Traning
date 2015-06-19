@@ -1,0 +1,10 @@
+*** Settings ***
+
+*** Variables ***
+${BROWSER}        Chrome
+${SERVER}         evbyminsd1706/rdp-qa2/
+${PROTOCOL}       https://
+${LOGIN_URL}      ${PROTOCOL}${SERVER}
+${TRAINER_USER}    RDPT_trainer10@test.com
+${TRAINER_PASSWORD}    1111
+${INCORRECT_PASSWORD}    incorectPassword12
