@@ -16,4 +16,9 @@ for repo in g.get_user().get_repos():
     print repo.name
     repo.edit(has_wiki=False)
 
-repo = Repo('https://github.com/ClarabridgeInc
+repo = Repo('https://github.com/ClarabridgeInc/QAAutomation')
+repo.commits()
+a_commit = repo.commits()[0]
+b_commit = repo.commits()[1]
+repo.diff(a_commit,b_commit)
+# repo.git.diff(t)
